@@ -1,0 +1,68 @@
+<!-- table.ejs -->
+<%- include('../../partials/messages.ejs') %>
+<div class="records table-responsive">
+    <div class="record-header">
+        <div class="add">
+            <button data-bs-toggle="modal" data-bs-target="#addUserModal">Add record</button>
+        </div>
+        <div class="browse">
+            <input type="search" placeholder="Search" class="record-search">
+            <select name="" id="">
+                <option value="">Status</option>
+            </select>
+        </div>
+    </div>
+    <div>
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th><span class="las la-sort"></span> FirstName and email</th>
+                    <th><span class="las la-sort"></span>position</th>
+                    <th><span class="las la-sort"></span> Role</th>
+                    <th><span class="las la-sort"></span> ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% allUsers.forEach(user => { %>
+                    <tr>
+                        <td>
+                            <div class="client">
+                                <div class="client-info">
+                                    <h4><%= user.firstName %></h4>
+                                    <small><%= user.email %></small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                           <%= user.position %>
+                        </td>
+                        <td>
+                            <%= user.role %>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <div class="dropdown">
+                                    <i class="fa-solid fa-caret-down " id="actionsDropdown" 
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    </i>
+                                    <ul class="dropdown-menu" aria-labelledby="actionsDropdown">
+                                    <li>
+                                        <a class="dropdown-item edit-user" href="#" data-bs-toggle="modal" data-bs-target="#edithUserModal" data-user-id="<%= user.id %>">Edit</a>
+                                    </li>
+                                        <li><a class="dropdown-item delete-user" href="delete/<%= user.id %>" >Delete</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<%- include('../../partials/modals.ejs') %>
+<!-- jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- JavaScript to handle AJAX request and populate modal -->
+<script src="js/ajax.js"></script>
