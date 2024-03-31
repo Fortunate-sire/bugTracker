@@ -1,3 +1,0 @@
-MONGODB_URI1 = mongodb://localhost:27017/bugTracker
-MONGODB_URI = mongodb+srv://okerri:OzBOSwMpmncC0LPc@cluster0.5nvvcxu.mongodb.net/bugTracker?retryWrites=true&w=majority&appName=Cluster0
-session_Key = 'now_is_this_any_secrete_telll%46666'
