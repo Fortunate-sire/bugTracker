@@ -14,7 +14,7 @@ exports.home = async (req, res) => {
   const templateData = {
     ...locals, user, allUsers,
   };
-  res.render('pages/dashBoard/home.ejs', templateData);
+  res.redirect('/project'); 
 };
 
 exports.notification = async (req, res) => {
