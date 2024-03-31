@@ -1,5 +1,5 @@
 api/node_modules
 api/.env
 application/node_modules
-bugTracker/application/.env
+bugTracker/application/env
 
