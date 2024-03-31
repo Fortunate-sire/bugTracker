@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // session
 app.use(session({
-  secret: 'toobad i had to do this,' // Change this to a secure random string
+  secret: 'toobad i had to do this,', // Change this to a secure random string
   resave: false,
   saveUninitialized: true,
   cookie: {
