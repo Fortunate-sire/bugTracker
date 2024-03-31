@@ -22,8 +22,8 @@ const userSchema = Schema({
   },
 
   position: {
-    type: String,
-    default: 'developer',
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'positionModel',
   },
 
   role: {
@@ -35,6 +35,7 @@ const userSchema = Schema({
     type: String,
     required: true,
   },
+  createdAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('userModel', userSchema);

@@ -1,0 +1,91 @@
+<%- include('../../partials/messages.ejs') %>
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <h2><%= project.title %></h2>
+        <div class="text-right mb-3">
+          <button class="btn btn-secondary edit-project" data-bs-toggle="modal" 
+          data-bs-target="#edithProjectModal" data-project-id="<%= project.id %>">Edit Members</button>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Assigned Tickets</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% if (project.contributors.length === 0) { %>
+                    <tr>
+                        <td colspan="3">No contributors</td>
+                    </tr>
+                <% } else { %>
+                    <% project.contributors.forEach(contributor => { %>
+                        <tr>
+                            <td><%= contributor.firstName %></td>
+                            <td><%= contributor.email %></td>
+                            <td><%= assignedTicketsCounts[contributor._id] || 0 %></td>
+                        </tr>
+                    <% }) %>
+                <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col" style="margin-top: 40px;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="mr-4">Tickets</h2>
+              <button class="btn btn-secondary getContributors" data-project-id="<%= project.id %>" 
+                data-bs-toggle="modal" data-bs-target="#addTicketModal">Add Ticket</button>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="table table-bordered" id="ticketTable">
+            <thead>
+              <tr>
+                <th>Ticket Title</th>
+                <th>Description</th>
+                <th>Ticket Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% tickets.forEach(ticket => { %>
+              <tr>
+                <td><a href="/singleTicket/<%= ticket.id %>" style="text-decoration: none; color: inherit;"><%= ticket.title %></a></td>
+                <td> <%= ticket.description.length <=40 ? ticket.description : ticket.description.slice(0, 39) + '...' %></td>
+                <td>
+                  <%= ticket.status %>
+                  <div class="actions" style="float: right;">
+                    <div class="dropdown">
+                        <i class="fa-solid fa-caret-down " id="actionsDropdown" 
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        </i>
+                        <ul class="dropdown-menu" aria-labelledby="actionsDropdown">
+                            <li>
+                                <a class="dropdown-item edit-ticket p-b" href="#" data-bs-toggle="modal" data-bs-target="#editTicketModal" data-ticket-id="<%= ticket.id %>">Edit</a>
+                            </li>
+                            <li><a class="dropdown-item delete" href="delete/<%= ticket.id %>" >Delete</a></li>
+                        </ul>
+                    </div>
+                </div>
+              </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<%- include('../../partials/modals/projectModals.ejs') %>
+<%- include('../../partials/modals/ticketsModal.ejs') %>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/js/ajax.js"></script>
+<script src="/js/ticketAjax.js"></script>
+<script src="/js/search.js"></script>
+<script src="/js/scripts.js"></script>
+<!-- JavaScript to handle AJAX request and populate modal -->

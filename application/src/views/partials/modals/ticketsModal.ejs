@@ -1,0 +1,133 @@
+<link rel="stylesheet" href="/css/project.css">
+<!-- Modal for adding Tickets -->
+<div class="modal fade" id="addTicketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add New Ticket</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addTicketForm" name="addTicketForm" action="/addTicket/<%= project.id %>" method="post">
+                    <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Enter ticket title" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter ticket description" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="contributors" class="form-label">Contributors</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" onkeyup="searchTicketProjectContributors(this)" data-project-id="<%= project.id %>" placeholder="Search contributors" aria-label="Search contributors" aria-describedby="searchButton">
+                        </div>
+                        <div class="scrollable-box">
+                            <!-- Populated from AJAX -->
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <div class="col">
+                            <label for="type" class="form-label">Type</label>
+                            <select class="form-select" id="type" name="type">
+                                <option value="Bug">Bug</option>
+                                <option value="Feature Request">Feature Request</option>
+                                <option value="Improvement">Improvement</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="priority" class="form-label">Priority</label>
+                            <select class="form-select" id="priority" name="priority">
+                               <option value="Low">Low</option>
+                               <option value="Medium">Medium</option>
+                               <option value="High">High</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status">
+                               <option value="Open">Open</option>
+                               <option value="In Progress">In Progress</option>
+                               <option value="Resolved">Resolved</option>
+                               <option value="Verified"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editTicketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Ticket</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editTicketForm" name="editTicketForm" method="post">
+                    <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Enter ticket title" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter ticket description" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="contributors" class="form-label">Contributors</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" onkeyup="searchTicketProjectContributors(this)" data-project-id="<%= project.id %>" placeholder="Search contributors" aria-label="Search contributors" aria-describedby="searchButton">
+                        </div>
+                        <div class="scrollable-box">
+                            <!-- Populated from AJAX -->
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <div class="col">
+                            <label for="type" class="form-label">Type</label>
+                            <select class="form-select" id="type" name="type">
+                                <option value="Bug">Bug</option>
+                                <option value="Feature Request">Feature Request</option>
+                                <option value="Improvement">Improvement</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="priority" class="form-label">Priority</label>
+                            <select class="form-select" id="priority" name="priority">
+                               <option value="Low">Low</option>
+                               <option value="Medium">Medium</option>
+                               <option value="High">High</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status">
+                               <option value="Open">Open</option>
+                               <option value="In Progress">In Progress</option>
+                               <option value="Resolved">Resolved</option>
+                               <option value="Verified"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

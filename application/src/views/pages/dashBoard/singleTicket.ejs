@@ -1,0 +1,83 @@
+<%- include('../../partials/messages.ejs') %>
+
+
+<div class="container">
+    <div class="row">
+        <!-- First Box -->
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Title and Metadata -->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title"><span style="color: #22BAA0;">Title: </span><%= ticket.title %></h5>
+                        <p class="card-text">
+                            <span class="badge bg-info" style="font-size: 13px;"><%= ticket.type %></span>
+                            <span class="badge bg-primary" style="font-size: 13px;"><%= ticket.status %></span>
+                            <span class="badge bg-danger" style="font-size: 13px;"><%= ticket.priority %></span>
+                        </p>
+                    </div>
+                    <!-- Title Description -->
+                    <hr>
+                    <!-- Author -->
+                    <p class="card-text"><span style="font-size: 20px; color: #22BAA0;">Author: </span><%= ticket.author.firstName %></p>
+                    <!-- Description -->
+                    <hr>
+                    <div class="description">
+                        <p style="font-size: 20px; color: #22BAA0;"> Description</p>
+                        <p class="card-text"> <%= ticket.description %></p>
+                    </div>
+                    <!-- Assigned Devs -->
+                    <hr>
+                    <p class="card-text"><span style="color: #22BAA0;">Assigned devs:</span>
+                        <% ticket.assinged.forEach(user => { %>
+                            <%= user.firstName %>,
+                        <% }) %>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Second Box -->
+        <div class="col-md-5">
+            <div class="card" style="height: 400px;"> <!-- Set a fixed height -->
+                <div class="card-body" style="overflow-y: auto;"> <!-- Apply overflow-y for vertical scrolling -->
+                    <h5 class="card-title">Chat Box</h5>
+                    <!-- Messages -->
+                    <div class="messages">
+                    <% ticketMessages.forEach(message => { %>
+                        <div class="chat-message d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="mb-1"><strong><%= message.user.firstName %></strong> - <span class="message-date"><%= new Date(message.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }) %></span></p>
+                                <p class="mb-0"><%= message.message %></p>
+                                <hr>
+                            </div>
+                            <% if (message.user._id.toString() === usersId.toString()) { %>
+                                <a href="/deleteMessage/<%= message.id %>" class="btn btn-sm btn-danger delete-message"><i style="color: white;" class="fas fa-trash-alt"></i></a>
+                            <% } %>
+                        </div>
+                    <% }) %>
+                    </div>
+                    <!-- Input Field -->
+                    <hr>
+                    <form id="messageForm" action="/ticketMessage" method="POST">
+                        <div class="input-group mb-3">
+                            <input type="text" name="message" class="form-control" placeholder="Enter message" aria-label="Enter message" aria-describedby="button-addon2">
+                            <button class="btn btn-primary sendMessage" type="submit" id="button-addon2" data-ticket-id="<%= ticket.id %>">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+
+  
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/js/ajax.js"></script>
+<script src="/js/ticketAjax.js"></script>
+<script src="/js/search.js"></script>
+<script src="/js/scripts.js"></script>
+<!-- JavaScript to handle AJAX request and populate modal -->

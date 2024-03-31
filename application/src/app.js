@@ -5,6 +5,7 @@ const session = require('express-session');
 const flash = require('express-flash');
 const path = require('path');
 const { dbConnect } = require('./api/config/db');
+const fetchNotificationCount = require('./api/middlewares/notifictionCount');
 
 const port = 5000;
 
@@ -12,6 +13,7 @@ const app = express();
 
 // middlewares
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // Add this line to parse JSON requests
 app.use(morgan('tiny'));
 
 // templating
@@ -35,10 +37,16 @@ app.use(session({
 
 // flash messages
 app.use(flash());
+
+// for notification
+app.use(fetchNotificationCount);
+
 // routes
 app.use('/', require('./api/routes/userRoutes'));
 app.use('/', require('./api/routes/dashboardRouter'));
 app.use('/', require('./api/routes/adminRoutes'));
+app.use('/', require('./api/routes/projectRoutes'));
+app.use('/', require('./api/routes/ticketsRouter'));
 
 // connection to database
 dbConnect().then(() => {

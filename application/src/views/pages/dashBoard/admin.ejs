@@ -1,21 +1,30 @@
 <!-- table.ejs -->
 <%- include('../../partials/messages.ejs') %>
+<div class="page-header">
+    <h1>Dashboard</h1>
+    <small>Home / <%- locals.title %></small>
+</div>
 <div class="records table-responsive">
     <div class="record-header">
         <div class="add">
-            <button data-bs-toggle="modal" data-bs-target="#addUserModal">Add record</button>
+            <button class="mr-4 btn" btn data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
+            <button class="mr-4 btn" data-bs-toggle="modal" data-bs-target="#addPositionModal">Add position</button>
+            <button class="mr-4 btn" data-bs-toggle="modal" data-bs-target="#edithPositionModal">edith positions</button>
         </div>
         <div class="browse">
-            <input type="search" placeholder="Search" class="record-search">
-            <select name="" id="">
-                <option value="">Status</option>
-            </select>
+            <input type="search" placeholder="search" onkeyup="searchData(this)" class="record-search">
+                <select name="action" id="actionSelect" onchange="document.getElementById('actionForm').submit();">
+                    <option selected>Action</option>
+                    <option value="/deleteMultiple">Delete selected</option>
+                </select>
         </div>
     </div>
-    <div>
-        <table width="100%">
+    <form action="/deleteMultipleUsers" method="post" id="actionForm">
+        <table width="100%" id="userTable">
             <thead>
                 <tr>
+                    <!-- Add a th for the checkbox column -->
+                    <th>multiple select</th>
                     <th><span class="las la-sort"></span> FirstName and email</th>
                     <th><span class="las la-sort"></span>position</th>
                     <th><span class="las la-sort"></span> Role</th>
@@ -26,6 +35,12 @@
                 <% allUsers.forEach(user => { %>
                     <tr>
                         <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="<%= user.id %>" id="checkbox<%= user.id %>" name="selected">
+                                <label class="form-check-label" for="checkbox<%= user.id %>"></label>
+                            </div>
+                        </td>
+                        <td>
                             <div class="client">
                                 <div class="client-info">
                                     <h4><%= user.firstName %></h4>
@@ -34,7 +49,8 @@
                             </div>
                         </td>
                         <td>
-                           <%= user.position %>
+                            <% const userPosition = positions.find(position => position._id.equals(user.position)); %>
+                            <%= userPosition ? userPosition.position : 'none' %>
                         </td>
                         <td>
                             <%= user.role %>
@@ -46,10 +62,10 @@
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     </i>
                                     <ul class="dropdown-menu" aria-labelledby="actionsDropdown">
-                                    <li>
-                                        <a class="dropdown-item edit-user" href="#" data-bs-toggle="modal" data-bs-target="#edithUserModal" data-user-id="<%= user.id %>">Edit</a>
-                                    </li>
-                                        <li><a class="dropdown-item delete-user" href="delete/<%= user.id %>" >Delete</a></li>
+                                        <li>
+                                            <a class="dropdown-item edit-user" href="#" data-bs-toggle="modal" data-bs-target="#edithUserModal" data-user-id="<%= user.id %>">Edit</a>
+                                        </li>
+                                        <li><a class="dropdown-item delete" href="delete/<%= user.id %>" >Delete</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -58,11 +74,13 @@
                 <% }) %>
             </tbody>
         </table>
-    </div>
+    </form>
 </div>
 
-<%- include('../../partials/modals.ejs') %>
+<%- include('../../partials/modals/adminModals.ejs') %>
 <!-- jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- JavaScript to handle AJAX request and populate modal -->
 <script src="js/ajax.js"></script>
+<script src="js/search.js"></script>
+<script src="js/scripts.js"></script>

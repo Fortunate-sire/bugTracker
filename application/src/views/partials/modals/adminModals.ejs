@@ -22,8 +22,14 @@
                 <div class="row mb-3">
                     <div class="col">
                         <label for="position" class="form-label">Position</label>
-                        <input type="text" class="form-control" id="position" name="position" placeholder="Enter position" required>
+                        <select class="form-select form-control" id="position" name="position" required>
+                            <option selected>None</option required>
+                            <% positions.forEach(position => { %>
+                                <option value="<%= position.position %>"> <%= position.position %></option>
+                            <% }) %>
+                        </select>
                     </div>
+                    
                     <div class="col">
                         <label for="role" class="form-label">Role</label>
                         <select class="form-select form-control" id="role" name="role" required>
@@ -79,7 +85,12 @@
                 <div class="row mb-3">
                     <div class="col">
                         <label for="position" class="form-label">Position</label>
-                        <input type="text" class="form-control" id="position" name="position" placeholder="Enter position" required>
+                        <select class="form-select form-control" id="position1" name="position" required>
+                            <option selected>none</option>
+                            <% positions.forEach(position => { %>
+                                <option value="<%= position.position %>"> <%= position.position %></option>
+                            <% }) %>
+                        </select>
                     </div>
                     <div class="col">
                         <label for="role" class="form-label">Role</label>
@@ -93,6 +104,72 @@
                 </div>
         </div>        
         
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </form>
+      </div>
+    </div>
+</div>
+
+<!-- Modal for adding Position-->
+<div class="modal fade" id="addPositionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>     
+        <div class="modal-body">
+            <form action="addPosition" method="post">
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="position" class="form-label">Position</label>
+                        <input type="text" class="form-control" id="position" name="position" placeholder="Enter position" required>
+                    </div>
+                </div>
+        </div>        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </form>
+      </div>
+    </div>
+</div>
+
+<!-- Modal for  edithing positions Position-->
+<div class="modal fade" id="edithPositionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>     
+        <div class="modal-body">
+            <form action="edithPosition" method="post">
+                <div class="row mb-3">
+                    <% positions.forEach((position, index) => { %>
+                        <div class="col">
+                            <div class="input-group">
+                                <input type="text" value="<%= position.position %>" 
+                                    class="form-control w-75" id="<%= position.id %>" name="positions"
+                                    placeholder="Enter position" required>
+                                <input type="hidden" value="<%= position.id %>" 
+                                class="form-control w-75" id="<%= position.id %>" name="id"
+                                placeholder="Enter position" required>
+                                <a href="/deletePosition/<%= position.id %>" class="delete-user" style="margin-left: 10px; margin-top: 4px;">
+                                    <i class="fa-solid fa-trash" style="color: red;"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <% if (index % 2 === 1 || index === positions.length - 1) { %>
+                            </div><div class="row mb-3">
+                        <% } %>
+                    <% }) %>
+                </div>
+        </div>        
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Save changes</button>

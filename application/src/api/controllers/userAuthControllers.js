@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const UserModel = require('../models/userModel');
+const userModel = require('../models/userModel');
 
 /**
  *
@@ -88,4 +89,77 @@ exports.logout = (req, res) => {
     }
     return res.redirect('/signup');
   });
+};
+
+exports.getAllUSers = async (req, res) => {
+  const users = await userModel.find({});
+  res.status(200).json(users);
+};
+
+exports.loginDemoUser = async (req, res) => {
+  const locals = {
+    title: 'login',
+    messages: req.flash('messages'),
+    layout: 'layout/authLayout',
+  };
+  try {
+    if (req.method !== 'POST') {
+      const email = 'favourokerri767@gmail.com';
+      const password = '12345678';
+      const user = await UserModel.findOne({ email });
+      if (!user) {
+        req.flash('messages', { type: 'danger', text: 'Username and/or password incorrect' });
+        return res.redirect('/');
+      }
+
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        req.session.userId = user.id;
+        req.flash('messages', { type: 'success', text: 'logged in' });
+        return res.redirect('/home');
+      }
+      req.flash('messages', { type: 'danger', text: 'Username and/or password incorrect' });
+      return res.redirect('/');
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+    req.flash('messages', { type: 'danger', text: 'Sorry some error occured' });
+    res.redirect('/');
+  }
+  res.render('pages/auth/login', locals);
+};
+
+exports.loginDemoAdmin = async (req, res) => {
+  const locals = {
+    title: 'login',
+    messages: req.flash('messages'),
+    layout: 'layout/authLayout',
+  };
+  try {
+    if (req.method !== 'POST') {
+      const email = 'favourokerri@gmail.com';
+      const password = '12345678';
+      const user = await UserModel.findOne({ email });
+      if (!user) {
+        req.flash('messages', { type: 'danger', text: 'Username and/or password incorrect' });
+        return res.redirect('/');
+      }
+
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        req.session.userId = user.id;
+        req.flash('messages', { type: 'success', text: 'logged in' });
+        return res.redirect('/home');
+      }
+      req.flash('messages', { type: 'danger', text: 'Username and/or password incorrect' });
+      return res.redirect('/');
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+    req.flash('messages', { type: 'danger', text: 'Sorry some error occured' });
+    res.redirect('/');
+  }
+  res.render('pages/auth/login', locals);
 };

@@ -1,0 +1,12 @@
+<%- include('../../partials/messages.ejs') %>
+
+<div class="container mt-2">
+    <h1 class="mb-4">Notifications</h1>
+    <div class="notification-list">
+     <% notifications.forEach(notification => { %>
+        <div class="alert alert-info" role="alert">
+            <i class="fas fa-info-circle me-2"></i> <%= notification.notification %>.
+        </div>
+     <% }) %>
+    </div>
+  </div>

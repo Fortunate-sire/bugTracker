@@ -1,4 +1,4 @@
 .scrollable-box {
-    max-height: 200px; /* Set the maximum height here */
+    max-height: 100px; /* Set the maximum height here */
     overflow-y: auto; /* Enable vertical scrollbar if content exceeds the height */
 }
